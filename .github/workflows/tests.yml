@@ -1,0 +1,98 @@
+name: React
+
+on:
+  - push
+
+jobs:
+  unit:
+    name: Unit Tests
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      issues: read
+      checks: write
+      statuses: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          check-latest: true
+
+      - name: Install dependencies
+        run: |
+          cd client
+          npm install
+
+      - name: Run unit tests
+        run: |
+          cd client
+          npm run test:unit:ci:coverage
+
+      - name: Publish test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          files: client/test-results/junit-unit-test-result.xml
+          report_individual_runs: true
+
+      - name: Upload unit test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: unit-test-results
+          path: client/test-results
+          retention-days: 30
+
+      - name: Upload code coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: unit-test-code-coverage
+          path: client/coverage
+          retention-days: 30
+
+      # - name: Checkout gh-pages branch
+      #   run: |
+      #     echo ${{ github.head_ref }}
+      #     echo ${{ github.ref }}
+      #     echo ${{ github.base_ref }}
+      #     echo ${{ github.ref_name }}
+      #     echo ${{ github.sha }}
+          
+      #     pwd | cat
+      #     ls -R
+          
+      #     git fetch
+      #     git checkout test-gh-pages
+
+      #     mkdir artifacts
+
+      # - name: Download artifacts
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: unit-test-code-coverage
+      #     path: artifacts
+
+      # - name: Commit and push reports
+      #   run: |
+      #     mkdir -p reports
+      #     cd reports
+      #     mkdir ${{ github.head_ref || github.ref_name }}
+      #     cd ${{ github.head_ref || github.ref_name }}
+      #     mv ./../../artifacts/* .
+      #     pwd
+      #     ls -R
+      #     git config user.name github-actions
+      #     git config user.email github-actions@github.com
+      #     git status
+      #     git add .
+      #     git status
+      #     git commit -m ${{ github.head_ref || github.ref_name }}
+      #     git push
