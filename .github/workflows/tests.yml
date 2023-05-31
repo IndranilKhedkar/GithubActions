@@ -89,7 +89,8 @@ jobs:
           cd reports
           mkdir -p ${{ github.head_ref || github.ref_name }}
           cd ${{ github.head_ref || github.ref_name }}
-          mv ./../../artifacts/* .
+          cp -R ./../../artifacts/* .
+          rm -R ./../../artifacts/
           pwd
           git config user.name github-actions
           git config user.email github-actions@github.com
