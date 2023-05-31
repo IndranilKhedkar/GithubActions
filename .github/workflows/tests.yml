@@ -87,7 +87,7 @@ jobs:
         run: |
           mkdir -p reports
           cd reports
-          mkdir ${{ github.head_ref || github.ref_name }}
+          mkdir -p ${{ github.head_ref || github.ref_name }}
           cd ${{ github.head_ref || github.ref_name }}
           mv ./../../artifacts/* .
           pwd
