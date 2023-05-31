@@ -66,11 +66,8 @@ jobs:
           echo ${{ github.ref_name }}
           echo ${{ github.sha }}
           
-          pwd | cat
-          ls -R
-          
           git fetch
-          git checkout test-gh-pages
+          git checkout gh-pages
 
           mkdir artifacts
 
@@ -88,7 +85,6 @@ jobs:
           cd ${{ github.head_ref || github.ref_name }}
           mv ./../../artifacts/* .
           pwd
-          ls -R
           git config user.name github-actions
           git config user.email github-actions@github.com
           git status
