@@ -89,7 +89,7 @@ jobs:
           cd reports
           mkdir -p ${{ github.head_ref || github.ref_name }}
           cd ${{ github.head_ref || github.ref_name }}
-          rm -R .
+          rm -rf *
           cp -R ./../../artifacts/* .
           rm -R ./../../artifacts/
           pwd
