@@ -1,0 +1,18 @@
+<testExecutions version="1">
+  <file path="src/tools/__tests__/getAllCountries.ts">
+    <testCase name="returns expected list of countries" duration="5" />
+  </file>
+  <file path="src/tools/__tests__/hasRight.ts">
+    <testCase name="returns true for user with given right" duration="1" />
+    <testCase name="returns false for user without given right" duration="0" />
+    <testCase name="returns false for user with no rights" duration="0" />
+  </file>
+  <file path="src/tools/__tests__/isAdmin.ts">
+    <testCase name="returns true for admin user" duration="2" />
+    <testCase name="returns false for non-admin user" duration="0" />
+  </file>
+  <file path="src/tools/__tests__/isOctave.ts">
+    <testCase name="returns true for user account type as &quot;BROOKLYN&quot;" duration="2" />
+    <testCase name="returns false for account type other than &quot;BROOKLYN&quot;" duration="0" />
+  </file>
+</testExecutions>
