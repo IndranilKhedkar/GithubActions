@@ -69,12 +69,18 @@ jobs:
           git fetch
           git checkout gh-pages
 
-          mkdir artifacts
+          # mkdir artifacts
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
           name: unit-test-code-coverage
+          path: artifacts
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: unit-test-results
           path: artifacts
 
       - name: Commit and push reports
