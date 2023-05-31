@@ -58,41 +58,41 @@ jobs:
           path: client/coverage
           retention-days: 30
 
-      # - name: Checkout gh-pages branch
-      #   run: |
-      #     echo ${{ github.head_ref }}
-      #     echo ${{ github.ref }}
-      #     echo ${{ github.base_ref }}
-      #     echo ${{ github.ref_name }}
-      #     echo ${{ github.sha }}
+      - name: Checkout gh-pages branch
+        run: |
+          echo ${{ github.head_ref }}
+          echo ${{ github.ref }}
+          echo ${{ github.base_ref }}
+          echo ${{ github.ref_name }}
+          echo ${{ github.sha }}
           
-      #     pwd | cat
-      #     ls -R
+          pwd | cat
+          ls -R
           
-      #     git fetch
-      #     git checkout test-gh-pages
+          git fetch
+          git checkout test-gh-pages
 
-      #     mkdir artifacts
+          mkdir artifacts
 
-      # - name: Download artifacts
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: unit-test-code-coverage
-      #     path: artifacts
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: unit-test-code-coverage
+          path: artifacts
 
-      # - name: Commit and push reports
-      #   run: |
-      #     mkdir -p reports
-      #     cd reports
-      #     mkdir ${{ github.head_ref || github.ref_name }}
-      #     cd ${{ github.head_ref || github.ref_name }}
-      #     mv ./../../artifacts/* .
-      #     pwd
-      #     ls -R
-      #     git config user.name github-actions
-      #     git config user.email github-actions@github.com
-      #     git status
-      #     git add .
-      #     git status
-      #     git commit -m ${{ github.head_ref || github.ref_name }}
-      #     git push
+      - name: Commit and push reports
+        run: |
+          mkdir -p reports
+          cd reports
+          mkdir ${{ github.head_ref || github.ref_name }}
+          cd ${{ github.head_ref || github.ref_name }}
+          mv ./../../artifacts/* .
+          pwd
+          ls -R
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git status
+          git add .
+          git status
+          git commit -m ${{ github.head_ref || github.ref_name }}
+          git push
