@@ -19,14 +19,18 @@ jobs:
           ref: gh-pages
           
       - name: Cleanup reports
+        shell: bash
         run: |
+          BRANCH_NAME=${{ github.head_ref || github.ref_name }}
+
           cd reports
-          cd ${{ github.head_ref || github.ref_name }}
+          cd $BRANCH_NAME
+          
           rm -rf *
+          
           git config user.name github-actions
           git config user.email github-actions@github.com
           git status
           git add .
-          git status
           git commit -m "Deleting ${{ github.head_ref || github.ref_name }} folder contents."
-          git push
+          git push origin
