@@ -41,7 +41,7 @@ jobs:
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          files: client/test-results/junit-unit-test-result.xml
+          files: client/unit-test-results/junit-unit-test-result.xml
           report_individual_runs: true
 
       - name: Upload unit test results
@@ -68,8 +68,6 @@ jobs:
           
           git fetch
           git checkout gh-pages
-
-          # mkdir artifacts
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
