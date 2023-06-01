@@ -1,7 +1,6 @@
 name: React
 
 on:
-  - push
   - pull_request
 
 jobs:
