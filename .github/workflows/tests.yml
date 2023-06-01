@@ -90,8 +90,9 @@ jobs:
           mkdir -p ${{ github.head_ref || github.ref_name }}
           cd ${{ github.head_ref || github.ref_name }}
           rm -rf *
-          cp -R /artifacts/* .
-          rm -R /artifacts/
+          echo ${{ github.workspace }}
+          cp -R ${{ github.workspace }}/artifacts/* .
+          rm -R ${{ github.workspace }}/artifacts/
           pwd
           git config user.name github-actions
           git config user.email github-actions@github.com
