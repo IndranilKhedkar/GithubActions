@@ -7,7 +7,7 @@
     "test:unit": "vitest",
     "test:unit:coverage": "vitest --coverage.enabled --coverage.perFile --coverage.provider=c8 --coverage.reporter=lcov --coverage.reporter=text",
     "test:unit:ci": "vitest run",
-    "test:unit:ci:coverage": "vitest run --reporter=default --reporter=html --outputFile.html=./test-results/html-unit-test-result.html  --reporter=junit --outputFile.junit=./test-results/junit-unit-test-result.xml --reporter=vitest-sonar-reporter --outputFile.vitest-sonar-reporter=./test-results/sonar-unit-test-result.xml --coverage.enabled --coverage.all --coverage.provider=c8 --coverage.reporter=lcov --coverage.reporter=text"
+    "test:unit:ci:coverage": "vitest run --reporter=default --reporter=html --outputFile.html=./unit-test-results/html-unit-test-result.html --reporter=junit --outputFile.junit=./unit-test-results/junit-unit-test-result.xml --coverage.enabled --coverage.all --coverage.provider=c8 --coverage.reporter=lcov --coverage.reporter=text"
   },
   "author": "",
   "license": "ISC",
