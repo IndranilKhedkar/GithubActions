@@ -4,7 +4,7 @@ on:
       - closed
 
 jobs:
-  if_merged:
+  Cleanup:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
@@ -13,13 +13,13 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Checkout code
+      - name: Checkout 
         uses: actions/checkout@v3
+        with:
+          ref: gh-pages
           
-      - name: Delete reports
+      - name: Cleanup reports
         run: |
-          git fetch
-          git checkout gh-pages
           cd reports
           cd ${{ github.head_ref || github.ref_name }}
           rm -rf *
