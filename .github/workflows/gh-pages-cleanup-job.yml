@@ -9,15 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-      git fetch
-      git checkout gh-pages
-      cd reports
-      cd ${{ github.head_ref || github.ref_name }}
-      rm -rf *
-      git config user.name github-actions
-      git config user.email github-actions@github.com
-      git status
-      git add .
-      git status
-      git commit -m "Deleting ${{ github.head_ref || github.ref_name }} folder contents."
-      git push
+        git fetch
+        git checkout gh-pages
+        cd reports
+        cd ${{ github.head_ref || github.ref_name }}
+        rm -rf *
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git status
+        git add .
+        git status
+        git commit -m "Deleting ${{ github.head_ref || github.ref_name }} folder contents."
+        git push
