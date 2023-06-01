@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/constants/RIGHT_KEYS.ts</title>
+    <title>Code coverage report for src/tools/getBytesWithUnit.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/constants</a> RIGHT_KEYS.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/tools</a> getBytesWithUnit.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">93.1% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>27/27</span>
+                <span class='fraction'>27/29</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">93.1% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>27/27</span>
+                <span class='fraction'>27/29</span>
             </div>
         
             
@@ -90,7 +90,9 @@
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -104,46 +106,50 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export const RIGHT_KEYS = {
-  ACCOUNTS_INVOICING_READ: 'accounts.invoicing.read',
-  ACCOUNTS_INVOICING_WRITE: 'accounts.invoicing.write',
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * Converts bytes to the most relevant unit.
+ * We choosed to render IEC (1KiB = 1024 bytes) standard for the conversion and use SI units (see https://confluence.sierrawireless.com/pages/viewpage.action?pageId=58557514)
+ *
+ * Mostly inspired from http://bateru.com/news/2012/03/code-of-the-day-converts-bytes-to-unit/
+ *
+ * @param bytes
+ *            {number} The amount of bytes
+ * @param [precision]
+ *            {number} Sets the maximum length of decimal places. By default, 2 decimals
+ *
+ * @returns {String} Represents bytes is the most simplified form
+ */
+export function getBytesWithUnit(bytes: number, precision: number = 2) {
+  if (!(!isNaN(bytes) &amp;&amp; +bytes &gt; -1 &amp;&amp; isFinite(bytes))) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >    return '';</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+  const units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  const amountOfUnits = Math.max(0, Math.floor(Math.round((Math.log(+bytes) / Math.log(2)) * 1e6) / 1e6));
+  let unitSelected = Math.floor(amountOfUnits / 10);
+  unitSelected = units.length &gt; unitSelected ? <span class="branch-0 cbranch-no" title="branch not covered" >unitSelected : units.length - 1;</span>
+  bytes = +bytes / Math.pow(2, 10 * unitSelected);
 &nbsp;
-  ACCOUNT_NETWORK_COMPANY_VIEW_DETAILS: 'accountNetwork.company.viewDetails',
+  if (bytes.toString().length &gt; bytes.toFixed(precision).toString().length) {
+    bytes = Number(bytes.toFixed(precision));
+  }
 &nbsp;
-  ACCOUNT_NETWORK_OPERATOR_ACCOUNT_VIEW: 'accountNetwork.operator.account.view',
-  ACCOUNT_NETWORK_OPERATOR_ACCOUNT_CREATE: 'accountNetwork.operator.account.create',
-  ACCOUNT_NETWORK_OPERATOR_ACCOUNT_EDIT: 'accountNetwork.operator.account.edit',
-  ACCOUNT_NETWORK_OPERATOR_ACCOUNT_DELETE: 'accountNetwork.operator.account.delete',
-  ACCOUNT_NETWORK_PARTNERS_VIEW: 'accountNetwork.partners.view',
-  ACCOUNT_NETWORK_PROFILES_VIEW: 'accountNetwork.profiles.view',
-  ACCOUNT_NETWORK_SMS_ACCOUNT_VIEW: 'accountNetwork.sms.account.view',
-  ACCOUNT_NETWORK_SMS_ACCOUNT_CREATE: 'accountNetwork.sms.account.create',
-  ACCOUNT_NETWORK_SMS_ACCOUNT_EDIT: 'accountNetwork.sms.account.edit',
-  ACCOUNT_NETWORK_USERS_VIEW: 'accountNetwork.users.view',
-  ACCOUNT_NETWORK_USERS_WRITE: 'accountNetwork.users.write',
-&nbsp;
-  ACCOUNTS_ORDERING_READ: 'accounts.ordering.read',
-  ACCOUNTS_ORDERING_WRITE: 'accounts.ordering.write',
-&nbsp;
-  ACCOUNTS_SLA: 'accounts.sla.read',
-&nbsp;
-  AIRVANTAGE_ADMINISTRATION: 'airvantage.administration',
-&nbsp;
-  ENTITIES_SYSTEMS_VIEW: 'entities.systems.view',
-};
+  return `${bytes} ${units[unitSelected]}`;
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
