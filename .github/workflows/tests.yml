@@ -104,9 +104,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(context)
-            console.log(${{ github.event }})
-            
             let comment;
             let payload = {
               issue_number: context.issue.number,
@@ -118,11 +115,11 @@ jobs:
               comment = await github.rest.issues.getComment(payload);
             } catch { }
             
-            console.log(comment);
-            
             payload = {
               ...payload,
               body: `## Code coverage report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`
             }
 
-            await comment ? github.rest.issues.updateComment(payload) : github.rest.issues.createComment(payload);
+            await comment 
+              ? github.rest.issues.updateComment(payload) 
+              : github.rest.issues.createComment(payload);
