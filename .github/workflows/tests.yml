@@ -117,17 +117,14 @@ jobs:
 
             const botComment = comments.find(comment => comment.body.includes('## Code coverage report for commit'));
 
-            const commentBody = `## Code Coverage  
-            Report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`;
+            const commentBody = `## Code Coverage <br/>Report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`;
 
             if(botComment) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 comment_id: botComment.id,
-                body: `${commentBody}  
-                  
-                ♻️ This comment has been updated with latest results.`,
+                body: `${commentBody}<br />♻️ This comment has been updated with latest results.`,
               });
             } else {
               await github.rest.issues.createComment({
