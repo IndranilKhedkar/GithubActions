@@ -127,4 +127,4 @@ jobs:
               body: `## Code coverage report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`
             }
 
-            await comment ? github.rest.issues.updateComment(payload) : github.rest.issues.createComment(payload);
+            await comment ? github.rest.issues.updateComment(comment) : github.rest.issues.createComment(comment);
