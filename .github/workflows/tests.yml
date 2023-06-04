@@ -106,9 +106,19 @@ jobs:
           script: |
             console.log(context)
             console.log(${{ github.event }})
-            github.rest.issues.updateComment({
+            let payload = {
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
+            };
+            
+            const comment = await github.rest.issues.getComment(payload);
+            
+            console.log(comment);
+            
+            payload = {
+              ...payload,
               body: `## Code coverage report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`
-            })
+            }
+
+            await comment ? github.rest.issues.updateComment(payload) : github.rest.issues.createComment(payload);
