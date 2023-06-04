@@ -106,8 +106,8 @@ jobs:
           script: |
             console.log(context)
             github.rest.issues.createComment({
-              issue_number: context.issue.number,
+              issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `Visit https://indranilkhedkar.github.io/GithubActions/gh-pages/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html link to view code coverage report.`
+              body: `## Code coverage report for commit [${{ github.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`
             })
