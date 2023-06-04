@@ -2,9 +2,12 @@ on:
   pull_request:
     types:
       - closed
+  push:
+    branches:
+      - main
 
 jobs:
-  Cleanup:
+  cleanup gh-pages:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
@@ -32,5 +35,5 @@ jobs:
           git config user.email github-actions@github.com
           git status
           git add .
-          git commit -m "Deleting ${{ github.head_ref || github.ref_name }} folder contents."
+          git commit -m "Deleting $BRANCH_NAME folder contents."
           git push origin
