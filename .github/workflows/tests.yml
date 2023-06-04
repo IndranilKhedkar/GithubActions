@@ -109,5 +109,5 @@ jobs:
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## Code coverage report for commit [${{ github.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`
+              body: `## Code coverage report for commit [${{ github.event.workflow_run.head_sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`
             })
