@@ -116,7 +116,7 @@ jobs:
             
             try {
               comment = await github.rest.issues.getComment(payload);
-            } catch() { }
+            } catch { }
             
             console.log(comment);
             
