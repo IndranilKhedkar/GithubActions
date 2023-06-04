@@ -106,7 +106,7 @@ jobs:
           script: |
             let comment;
             let payload = {
-              issue_number: context.issue.number,
+              comment_id: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
             };
