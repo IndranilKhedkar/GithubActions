@@ -104,18 +104,18 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            let comment;
+            let issue;
             let payload = {
-              comment_id: context.issue.number,
+              issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
             };
             
             try {
-              comment = await github.rest.issues.getComment(payload);
+              issue = await github.rest.issues.get(payload);
             } catch { }
             
-            console.log(comment);
+            console.log(issue);
 
             payload = {
               ...payload,
@@ -124,6 +124,6 @@ jobs:
 
             console.log(payload);
 
-            await comment 
+            await issue 
               ? github.rest.issues.updateComment(payload) 
               : github.rest.issues.createComment(payload);
