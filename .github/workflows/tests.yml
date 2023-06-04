@@ -108,23 +108,21 @@ jobs:
             console.log(${{ github.event }})
             
             let comment;
-            let getCommentPayload = {
+            let payload = {
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
             };
             
             try {
-              comment = await github.rest.issues.getComment(getCommentPayload);
-            } catch(e) {
-              console.log("Error occured while trying to get comment.", e);
-            }
+              comment = await github.rest.issues.getComment(payload);
+            } catch() { }
             
             console.log(comment);
             
-            comment = {
-              ...getCommentPayload,
+            payload = {
+              ...payload,
               body: `## Code coverage report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`
             }
 
-            await comment ? github.rest.issues.updateComment(comment) : github.rest.issues.createComment(comment);
+            await comment ? github.rest.issues.updateComment(payload) : github.rest.issues.createComment(payload);
