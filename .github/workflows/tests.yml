@@ -104,28 +104,33 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            let comment;
-            let payload = {
+            // Get the list of existing comments.
+            const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.payload.number,
-            };
+            });
             
-            try {
-              comment = await github.rest.issues.listComments(payload);
-            } catch { }
-            
-            console.log(comment);
+            // Find any comment already made by the bot.
+            console.log(comments);
+            console.log(context.payload.pull_request.head.repo.full_name);
 
-            payload = {
-              ...payload,
-              body: `## Code coverage report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`
-            }
+            const botComment = comments.find(comment => comment.body.includes('## Code coverage report for commit'));
 
-            console.log(payload);
+            const commentBody = `## Code coverage report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`;
 
-            if(comment) {
-              await github.rest.issues.updateComment(payload);
+            if(botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: commentBody,
+              });
             } else {
-              await github.rest.issues.createComment(payload);
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.number,
+                body: commentBody,
+              });
             }
