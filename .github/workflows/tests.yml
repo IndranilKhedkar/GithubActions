@@ -41,20 +41,20 @@ jobs:
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          files: client/unit-test-results/junit-unit-test-result.xml
+          files: client/test-results/junit-unit-test-result.xml
           report_individual_runs: true
 
       - name: Upload unit test results
         uses: actions/upload-artifact@v3
         with:
-          name: unit-test-results
-          path: client/unit-test-results
+          name: test-results
+          path: client/test-results
           retention-days: 1
 
       - name: Upload code coverage report
         uses: actions/upload-artifact@v3
         with:
-          name: code-coverage
+          name: coverage
           path: client/coverage
           retention-days: 1
 
@@ -72,14 +72,14 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: code-coverage
-          path: artifacts/code-coverage
+          name: coverage
+          path: artifacts/coverage
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: unit-test-results
-          path: artifacts/unit-test-results
+          name: test-results
+          path: artifacts/test-results
 
       - name: Commit and push reports
         run: |
@@ -100,13 +100,14 @@ jobs:
           git commit -m ${{ github.head_ref || github.ref_name }}
           git push
 
-      - name: Comment on PR
+      - name: Comment code coverage report link
         uses: actions/github-script@v6
         with:
           script: |
+            console.log(context)
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 Thanks for reporting!'
+              body: `Visit https://indranilkhedkar.github.io/GithubActions/gh-pages/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html link to view code coverage report.`
             })
