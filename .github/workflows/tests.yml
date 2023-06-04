@@ -115,10 +115,14 @@ jobs:
               comment = await github.rest.issues.getComment(payload);
             } catch { }
             
+            console.log(comment);
+
             payload = {
               ...payload,
               body: `## Code coverage report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`
             }
+
+            console.log(payload);
 
             await comment 
               ? github.rest.issues.updateComment(payload) 
