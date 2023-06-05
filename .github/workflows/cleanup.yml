@@ -21,9 +21,9 @@ jobs:
           
       - name: Cleanup reports folder
         shell: bash
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
-          BRANCH_NAME=${{ github.head_ref || github.ref_name }}
-
           cd reports
           cd $BRANCH_NAME
           
