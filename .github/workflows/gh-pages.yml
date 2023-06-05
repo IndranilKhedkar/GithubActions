@@ -3,10 +3,10 @@ name: Publish gh-pages
 on:
   workflow_run:
     workflows: ["Run Tests"]
-    types: [requested]
+    types: [completed]
 
 jobs:
-  publish gh-pages:
+  publish_gh_pages:
     name: Publish GitHub Pages
     timeout-minutes: 10
     runs-on: ubuntu-latest
