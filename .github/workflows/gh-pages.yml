@@ -1,76 +1,39 @@
-name: Run Tests
+name: React
 
 on:
-  - pull_request
+  workflow_run:
+    workflows: [Run Tests]
+    types:
+      - completed
 
 jobs:
-  unit:
-    name: Unit Tests
+  publish gh-pages:
+    name: Publish GitHub Pages
     timeout-minutes: 10
     runs-on: ubuntu-latest
+
+    # Publish to gh-pages only if this is a PR event
+    if: github.event.workflow_run.event == 'pull_request'
 
     permissions:
       contents: write
       issues: read
-      checks: write
-      statuses: write
       pull-requests: write
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          check-latest: true
-
-      - name: Install dependencies
-        run: |
-          cd client
-          npm install
-
-      - name: Run unit tests
-        run: |
-          cd client
-          npm run test:unit:ci:coverage
-
-      - name: Upload unit test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-results
-          path: client/test-results
-          retention-days: 1
-
-      - name: Upload code coverage report
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage
-          path: client/coverage
-          retention-days: 1
-
-      - name: Publish test results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          files: client/test-results/junit-unit-test-result.xml
-          report_individual_runs: true
-
       - name: Checkout gh-pages branch
         uses: actions/checkout@v3
         with:
           ref: gh-pages
 
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: coverage
           path: artifacts/coverage
 
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: test-results
           path: artifacts/test-results
