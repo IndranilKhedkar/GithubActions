@@ -84,6 +84,8 @@ jobs:
           mkdir -p reports
           cd reports
           
+          echo ${{ env.branch_name }}
+
           mkdir -p ${{ env.branch_name }}
           cd ${{ env.branch_name }}
           
