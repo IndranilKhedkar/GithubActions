@@ -32,6 +32,7 @@ jobs:
           name: coverage
           workflow: tests.yml
           path: artifacts/coverage
+          run_id: ${{ github.event.workflow_run.id }}
 
       - name: Download artifacts
         uses: dawidd6/action-download-artifact@v2
@@ -39,6 +40,7 @@ jobs:
           name: test-results
           workflow: tests.yml
           path: artifacts/test-results
+          run_id: ${{ github.event.workflow_run.id }}
 
       - name: Commit and push reports
         run: |
@@ -66,7 +68,7 @@ jobs:
         with:
           script: |
             console.log(context);
-            
+
             // Get the list of existing comments.
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
