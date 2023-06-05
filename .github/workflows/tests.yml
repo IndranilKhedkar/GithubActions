@@ -111,15 +111,11 @@ jobs:
               issue_number: context.payload.number,
             });
             
-            // Find any comment already made by the bot.
-            console.log(comments);
-            console.log(context.payload.pull_request.head.repo.full_name);
-
-            const botComment = comments.find(comment => comment.body.includes('## Code Coverage<br/>'));
-
+            // Find any comment already made by the bot. Github BotId = 41898282 
+            const botComment = comments.find(comment => comment.user.id === 41898282 && comment.body.includes('## Code Coverage<br/>'));
             const commentBody = `## Code Coverage<br/>
             Report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ github.head_ref || github.ref_name }}/coverage/lcov-report/index.html).`;
-
+            
             if(botComment) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
