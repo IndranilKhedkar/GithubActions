@@ -8,7 +8,6 @@ on:
 
 jobs:
   cleanup gh-pages:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     permissions:
@@ -16,12 +15,12 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Checkout 
+      - name: Checkout gh-pages branch
         uses: actions/checkout@v3
         with:
           ref: gh-pages
           
-      - name: Cleanup reports
+      - name: Cleanup reports folder
         shell: bash
         run: |
           BRANCH_NAME=${{ github.head_ref || github.ref_name }}
