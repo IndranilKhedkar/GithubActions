@@ -37,6 +37,7 @@ jobs:
         run: |
           cd client
           npm run test:unit:ci:coverage
+          ls -R
 
       - name: Upload unit test results
         uses: actions/upload-artifact@v3
