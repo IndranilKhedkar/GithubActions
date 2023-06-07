@@ -64,8 +64,8 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: publish.yml
         with:
-          comment-body: `## Code Coverage<br/>
-          Report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ env.branch_name }}/coverage/lcov-report/index.html).`
+          comment-body: "## Code Coverage<br/>
+          Report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ env.branch_name }}/coverage/lcov-report/index.html)."
 
   # publish_code_coverage:
   #   name: Publish code coverage report
