@@ -31,7 +31,6 @@ jobs:
         run: |
           cd client
           npm install
-          echo $github.event
 
       - name: Run unit tests
         run: |
@@ -62,7 +61,7 @@ jobs:
         
       - name: Publish code coverage report
         if: github.event_name == 'pull_request'
-        uses: ./.github/workflows/publish.yml
+        uses: .github/workflows/publish.yml
         with:
           comment-body: >
             ## Code Coverage<br/>
