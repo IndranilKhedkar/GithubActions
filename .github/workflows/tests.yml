@@ -37,7 +37,6 @@ jobs:
         run: |
           cd client
           npm run test:unit:ci:coverage
-          ls -R
 
       - name: Upload unit test results
         uses: actions/upload-artifact@v3
@@ -63,7 +62,7 @@ jobs:
         
       - name: Publish code coverage report
         if: github.event_name == 'pull_request'
-        uses: ./.github/workflows/publish.yml
+        uses: ${{ github.workspace }}/.github/workflows/publish.yml
         with:
           comment-body: >
             ## Code Coverage<br/>
