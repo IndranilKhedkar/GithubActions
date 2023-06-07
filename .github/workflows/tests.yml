@@ -62,7 +62,7 @@ jobs:
         
       - name: Publish code coverage report
         if: github.event_name == 'pull_request'
-        uses: publish.yml
+        uses: ./publish.yml
         with:
           comment-body: >
             ## Code Coverage<br/>
