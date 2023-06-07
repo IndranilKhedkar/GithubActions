@@ -2,14 +2,18 @@ name: Publish
 
 on:
   workflow_call:
+    inputs:
+      comment-body:
+        description: "Comment to be added on pull request"
+        required: true
+        type: string
+        default: ""
 
 jobs:
   publish_code_coverage:
     name: Publish code coverage report
     timeout-minutes: 10
     runs-on: ubuntu-latest
-
-    # if: github.event_name == 'pull_request'
 
     permissions:
       contents: write
@@ -63,9 +67,7 @@ jobs:
       - name: Comment code coverage report link
         uses: actions/github-script@v6
         with:
-          script: |
-            console.log(context);
-            
+          script: |            
             // Get the list of existing comments.
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
@@ -75,15 +77,13 @@ jobs:
             
             // Find any comment already made by the bot. Github BotId = 41898282 
             const botComment = comments.find(comment => comment.user.id === 41898282 && comment.body.includes('## Code Coverage<br/>'));
-            const commentBody = `## Code Coverage<br/>
-            Report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ env.branch_name }}/coverage/lcov-report/index.html).`;
             
             if(botComment) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 comment_id: botComment.id,
-                body: `${commentBody}<br />
+                body: `${{inputs.comment-body}}<br />
                 :recycle: This comment has been updated with latest results.`,
               });
             } else {
@@ -91,6 +91,6 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.payload.number,
-                body: commentBody,
+                body: ${{inputs.comment-body}},
               });
             }
