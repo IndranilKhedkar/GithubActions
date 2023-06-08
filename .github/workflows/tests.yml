@@ -31,7 +31,6 @@ jobs:
         run: |
           cd client
           npm install
-          echo $github.event
 
       - name: Run unit tests
         run: |
@@ -59,14 +58,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           files: client/test-results/junit-unit-test-result.xml
           report_individual_runs: true
-        
+
       - name: Publish code coverage report
+        uses: ./.github/workflows/tests.yml
         if: github.event_name == 'pull_request'
-        uses: ./publish.yml
-        with:
-          comment-body: >
-            ## Code Coverage<br/>
-            Report for commit [${{ github.event.pull_request.head.sha }}](https://indranilkhedkar.github.io/GithubActions/reports/${{ env.branch_name }}/coverage/lcov-report/index.html).
 
   # publish_code_coverage:
   #   name: Publish code coverage report
@@ -129,8 +124,6 @@ jobs:
   #       uses: actions/github-script@v6
   #       with:
   #         script: |
-  #           console.log(context);
-            
   #           // Get the list of existing comments.
   #           const { data: comments } = await github.rest.issues.listComments({
   #             owner: context.repo.owner,
